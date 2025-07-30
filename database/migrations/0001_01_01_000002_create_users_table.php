@@ -17,6 +17,19 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('foto_profil')->nullable();
+            $table->string('headline')->nullable();
+            $table->string('keterangan')->nullable();
+            $table->unsignedBigInteger('provinsi_id')->nullable();
+            $table->foreign('provinsi_id')
+                ->references('id')
+                ->on('provinsi')
+                ->onDelete('cascade');
+            $table->unsignedBigInteger('kota_id')->nullable();
+            $table->foreign('kota_id')
+                ->references('id')
+                ->on('kota')
+                ->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
         });
