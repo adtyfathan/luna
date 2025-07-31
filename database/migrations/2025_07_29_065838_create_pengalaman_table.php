@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('nama_perusahaan')->nullable();
             $table->string('jabatan');
             $table->enum('tipe_pekerjaan', ['penuh_waktu', 'paruh_waktu', 'kontrak', 'magang'])->default('penuh_waktu');
-            $table->dateTime('tanggal_mulai');
-            $table->dateTime('tanggal_selesai')->nullable();
+            $table->date('tanggal_mulai');
+            $table->date('tanggal_selesai')->nullable();
             $table->text('deskripsi')->nullable();
             $table->text('lokasi')->nullable();
             $table->unsignedBigInteger('user_id');

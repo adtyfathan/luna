@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('nama_institusi')->nullable();
             $table->enum('tingkat', ['SMP', 'SMA', 'D3', 'S1', 'S2', 'S3']);
             $table->string('jurusan');
-            $table->dateTime('tanggal_mulai');
-            $table->dateTime('tanggal_selesai')->nullable();
+            $table->date('tanggal_mulai');
+            $table->date('tanggacolumn: l_selesai')->nullable();
             $table->integer('ipk')->nullable();
             $table->text('deskripsi')->nullable();
             $table->unsignedBigInteger('user_id');
