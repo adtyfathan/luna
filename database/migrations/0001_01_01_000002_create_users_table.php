@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('foto_profil')->nullable();
             $table->string('headline')->nullable();
-            $table->string('keterangan')->nullable();
+            $table->text('keterangan')->nullable();
             $table->unsignedBigInteger('provinsi_id')->nullable();
             $table->foreign('provinsi_id')
                 ->references('id')

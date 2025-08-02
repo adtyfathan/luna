@@ -1,7 +1,39 @@
 <div class="min-h-screen bg-gradient-to-br from-blue-50 to-white py-8 px-4 sm:px-6 lg:px-8">
     <div class="max-w-4xl mx-auto">
-        <div class="text-center mb-8">
-            <h1 class="text-4xl font-bold text-gray-900 mb-2">Tambahkan Pengalaman Kerja Baru</h1>
+        
+        {{-- Header --}}
+        <div class="mb-6 sm:mb-8">
+            <!-- Mobile Layout -->
+            <div class="block sm:hidden space-y-3">
+                <a href="{{ route('profile') }}" wire:navigate
+                    class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium transition-colors duration-200">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                    </svg>
+                    Kembali
+                </a>
+                <h1 class="text-xl font-bold text-gray-900 leading-tight">
+                    Tambahkan Pengalaman Kerja Baru
+                </h1>
+            </div>
+        
+            <!-- Desktop Layout -->
+            <div class="hidden sm:flex items-center justify-between relative">
+                <a href="{{ route('profile') }}" wire:navigate
+                    class="flex items-center text-blue-600 hover:text-blue-800 font-medium transition-colors duration-200">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                    </svg>
+                    Kembali
+                </a>
+        
+                <h1
+                    class="absolute left-1/2 transform -translate-x-1/2 text-2xl font-bold text-gray-900 whitespace-nowrap">
+                    Tambahkan Pengalaman Kerja Baru
+                </h1>
+        
+                <div class="w-20"></div>
+            </div>
         </div>
 
         <div class="bg-white rounded-2xl shadow-xl border border-blue-100 overflow-hidden">
@@ -147,18 +179,18 @@
 
                 {{-- Perusahaan Id --}}
 
-                <div class="pt-6 border-t border-gray-200">
+                <div class="pt-6 border-t border-gray-200 flex justify-end items-center">
                     <button type="submit"
-                        class="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-lg"
+                        class="bg-gradient-to-r text-sm from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-6 rounded-md transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-lg"
                         wire:loading.attr="disabled">
                         <span wire:loading.remove>
-                            <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                             </svg>
                             Tambahkan Pengalaman
                         </span>
                         <span wire:loading>
-                            <svg class="w-5 h-5 inline mr-2 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-4 h-4 inline mr-1 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
                                 </path>

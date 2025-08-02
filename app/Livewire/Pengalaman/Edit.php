@@ -29,6 +29,8 @@ class Edit extends Component
 
         if (!$this->pengalaman) abort(404, 'Pengalaman tidak ditemukan.');
 
+        if (Auth::user()->id !== $this->pengalaman->user_id) abort(403, 'Kamu tidak memiliki hak akses untuk mengedit pengalaman ini.');
+
         $this->namaPerusahaan = $this->pengalaman->nama_perusahaan;
         $this->jabatan = $this->pengalaman->jabatan;
         $this->tipePekerjaan = $this->pengalaman->tipe_pekerjaan;

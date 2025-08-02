@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('nama_institusi')->nullable();
             $table->enum('tingkat', ['SMP', 'SMA', 'D3', 'S1', 'S2', 'S3']);
-            $table->string('jurusan');
+            $table->string('jurusan')->nullable();
             $table->date('tanggal_mulai');
-            $table->date('tanggacolumn: l_selesai')->nullable();
-            $table->integer('ipk')->nullable();
+            $table->date('tanggal_selesai')->nullable();
+            $table->float('ipk')->nullable();
             $table->text('deskripsi')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')

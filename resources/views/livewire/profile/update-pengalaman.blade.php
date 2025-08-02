@@ -90,7 +90,7 @@ new class extends Component {
     <div class="space-y-6 mt-6">
 
         <div>
-            <a href="{{ route('pengalaman.create') }}" class="bg-blue-500 text-white py-2 px-6 text-sm rounded-lg" wire:navigate>Tambah Pengalaman</a>
+            <a href="{{ route('pengalaman.create') }}" class="bg-blue-500 text-white py-2 px-6 text-sm rounded-lg font-semibold" wire:navigate>Tambah Pengalaman</a>
         </div>
 
         @forelse($pengalamans as $pengalaman)
@@ -191,14 +191,5 @@ new class extends Component {
         @empty
             <!-- Empty State -->
         @endforelse
-    </div>
-
-    <!-- Mobile Add Button -->
-    <div class="sm:hidden fixed bottom-6 right-6">
-        <button class="w-14 h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg flex items-center justify-center transition-colors duration-200">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-            </svg>
-        </button>
     </div>
 </section>
