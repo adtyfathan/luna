@@ -13,6 +13,8 @@ use App\Livewire\Pendidikan\Edit as EditPendidikan;
 
 use App\Livewire\Pengguna;
 
+use App\Livewire\Koneksi;
+
 Route::get('/', Beranda::class)->name('beranda');
 
 Route::middleware(['auth'])->group(function(){
@@ -31,6 +33,8 @@ Route::middleware(['auth'])->group(function(){
     });
 
     Route::get('/pengguna/{userId}', Pengguna::class)->name('pengguna');
+
+    Route::get('/koneksi', Koneksi::class)->name('koneksi');
 });
 
 require __DIR__.'/auth.php';

@@ -55,11 +55,11 @@
                                 <div class="flex items-center gap-6 mb-4">
                                     <button wire:click="showFollowers" 
                                             class="text-sm font-medium text-black hover:text-blue-200 transition-colors duration-200 bg-black/10 px-3 py-1 rounded-full backdrop-blur-sm">
-                                        <span class="font-bold">{{ number_format($user->followerCount) }}</span> Followers
+                                        <span class="font-bold">{{ number_format($followerCount) }}</span> Followers
                                     </button>
                                     <button wire:click="showFollowing" 
                                             class="text-sm font-medium text-black hover:text-blue-200 transition-colors duration-200 bg-black/10 px-3 py-1 rounded-full backdrop-blur-sm">
-                                        <span class="font-bold">{{ number_format($user->followingCount) }}</span> Following
+                                        <span class="font-bold">{{ number_format($followingCount) }}</span> Following
                                     </button>
                                 </div>
                             </div>
@@ -67,14 +67,14 @@
                             <!-- Action Buttons -->
                             @if (Auth::check() && Auth::id() !== $user->id)
                                 <div class="flex flex-col sm:flex-row gap-3">
-                                    <button wire:click="toggleFollow" 
+                                    <button wire:click="toggleFollow"
                                             class="px-6 py-3 rounded-lg font-medium transition-all duration-200 transform hover:scale-105 shadow-lg
-                                                   {{ $isFollowing
+                                                    {{ $isFollowing
         ? 'bg-white/20 text-black hover:bg-white/30 border border-white/30 backdrop-blur-sm'
         : 'bg-white text-blue-600 hover:bg-blue-50 shadow-white/25' }}">
                                         {{ $isFollowing ? 'Following' : 'Follow' }}
                                     </button>
-                                    
+
                                     <button class="px-6 py-3 border border-black/30 text-black rounded-lg font-medium hover:bg-white/10 transition-all duration-200 transform hover:scale-105 backdrop-blur-sm">
                                         Message
                                     </button>
@@ -482,7 +482,7 @@
                     wire:click.stop>
                     <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                         <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-lg font-medium text-gray-900">Followers</h3>
+                            <h3 class="text-lg font-medium text-gray-900">Following</h3>
                             <button wire:click="closeModals" class="text-gray-400 hover:text-gray-600">
                                 <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

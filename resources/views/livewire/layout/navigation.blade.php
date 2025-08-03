@@ -33,6 +33,14 @@ new class extends Component {
                         {{ __('Beranda') }}
                     </x-nav-link>
                 </div>
+
+                @if (Auth::user())
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('koneksi')" :active="request()->routeIs('koneksi')" wire:navigate>
+                            {{ __('Koneksi') }}
+                        </x-nav-link>
+                    </div>
+                @endif
             </div>
 
             <!-- Settings Dropdown -->
@@ -112,6 +120,12 @@ new class extends Component {
             <x-responsive-nav-link :href="route('beranda')" :active="request()->routeIs('beranda')" wire:navigate>
                 {{ __('Beranda') }}
             </x-responsive-nav-link>
+
+            @if (Auth::user())
+                <x-responsive-nav-link :href="route('koneksi')" :active="request()->routeIs('koneksi')" wire:navigate>
+                    {{ __('Koneksi') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->

@@ -15,6 +15,8 @@ class Pengguna extends Component
     public $isFollowing = false;
     public $showFollowersModal = false;
     public $showFollowingModal = false;
+    public $followerCount;
+    public $followingCount;
 
     public function mount($userId)
     {
@@ -37,10 +39,13 @@ class Pengguna extends Component
         if (!$this->user)
             abort(404, 'User tidak ditemukan.');
 
-        // Check if current user is following this user
+        // Check if current user is following this user 
         if (Auth::check()) {
             $this->isFollowing = Auth::user()->following()->where('following_id', $userId)->exists();
         }
+
+        $this->followerCount = $this->user->followerCount;
+        $this->followingCount = $this->user->followingCount;
     }
 
     public function getJobTypeLabel($type)
@@ -108,6 +113,7 @@ class Pengguna extends Component
         $this->activeTab = $tab;
     }
 
+    // effect pengguna follower
     public function toggleFollow()
     {
         if (!Auth::check()) {
@@ -119,9 +125,13 @@ class Pengguna extends Component
         if ($this->isFollowing) {
             $currentUser->following()->detach($this->user->id);
             $this->isFollowing = false;
+            $this->followerCount -= 1;
         } else {
-            $currentUser->following()->attach($this->user->id);
+            $currentUser->following()->attach($this->user->id, [
+                'created_at' => now(),
+            ]);
             $this->isFollowing = true;
+            $this->followerCount += 1;
         }
     }
 
