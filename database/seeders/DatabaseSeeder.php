@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             KotaSeeder::class,
             StatusSeeder::class,
             InstitusiSeeder::class,
+            EdukasiSeeder::class,
         ]);
     }
 }
