@@ -45,28 +45,25 @@ class Koneksi extends Component
         $now = now();
         $created = \Carbon\Carbon::parse($createdAt)->locale('id');
 
-        $diffInMinutes = $now->diffInMinutes($created);
-        $diffInHours = $now->diffInHours($created);
-        $diffInDays = $now->diffInDays($created);
+        $diffInMinutes = $created->diffInMinutes($now);
+        $diffInHours = $created->diffInHours($now);
+        $diffInDays = $created->diffInDays($now);
 
         if ($diffInMinutes < 1) {
             return 'Baru saja';
         } elseif ($diffInMinutes < 60) {
-            return intval($diffInMinutes) . ' menit lalu';
+            return (int)$diffInMinutes . ' menit lalu';
         } elseif ($diffInHours < 24) {
-            return intval($diffInHours) . ' jam lalu';
+            return (int)$diffInHours . ' jam lalu';
         } elseif ($diffInDays < 7) {
-            return intval($diffInDays) . ' hari lalu';
+            return (int)$diffInDays . ' hari lalu';
         } elseif ($diffInDays < 30) {
             $weeks = floor($diffInDays / 7);
-            return intval($weeks) . ' minggu lalu';
+            return (int)$weeks . ' minggu lalu';
         } else {
             return $created->translatedFormat('d F Y');
         }
     }
-
-
-
 
     #[Layout('layouts.app')]
     public function render()

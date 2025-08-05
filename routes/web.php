@@ -11,6 +11,10 @@ use App\Livewire\Pengalaman\Edit as EditPengalaman;
 use App\Livewire\Pendidikan\Create as CreatePendidikan;
 use App\Livewire\Pendidikan\Edit as EditPendidikan;
 
+// Post
+use App\Livewire\Post\Create as CreatePost;
+use App\Livewire\Post\Edit as EditPost;
+
 use App\Livewire\Pengguna;
 
 use App\Livewire\Koneksi;
@@ -30,6 +34,11 @@ Route::middleware(['auth'])->group(function(){
     Route::prefix('/pendidikan')->name('pendidikan')->group(function () {
         Route::get('/create', CreatePendidikan::class)->name('.create');
         Route::get('/edit/{pendidikanId}', EditPendidikan::class)->name('.edit');
+    });
+
+    Route::prefix('/post')->name('post')->group(function () {
+        Route::get('/create', CreatePost::class)->name('.create');
+        Route::get('/edit/{postId}', EditPost::class)->name('.edit');
     });
 
     Route::get('/pengguna/{userId}', Pengguna::class)->name('pengguna');

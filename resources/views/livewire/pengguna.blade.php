@@ -451,17 +451,19 @@
                                 </svg>
                             </button>
                         </div>
-                        <div class="py-8 flex items-center gap-4">
+                        <div>
                             @forelse ($user->follower as $follower)
-                                @if ($follower->foto_profil)
-                                    <img class="h-10 w-10 object-cover rounded-full shadow-lg ring-1 ring-white"
-                                        src="{{ Storage::url($follower->foto_profil) }}" alt="{{ $follower->name }}'s avatar">
-                                @else
-                                    <img class="h-10 w-10 object-cover rounded-full opacity-90 ring-1 ring-white" src="{{ asset('images/default-avatar.png') }}"
-                                        alt="{{ $follower->name }}'s avatar">
-                                @endif
+                                <div class="py-3 flex items-center gap-4">
+                                    @if ($follower->foto_profil)
+                                        <img class="h-10 w-10 object-cover rounded-full shadow-lg ring-1 ring-white"
+                                            src="{{ Storage::url($follower->foto_profil) }}" alt="{{ $follower->name }}'s avatar">
+                                    @else
+                                        <img class="h-10 w-10 object-cover rounded-full opacity-90 ring-1 ring-white" src="{{ asset('images/default-avatar.png') }}"
+                                            alt="{{ $follower->name }}'s avatar">
+                                    @endif
 
-                                <a href="{{ route('pengguna', $follower->id) }}" wire:navigate>{{ $follower->name }}</a>
+                                    <a href="{{ route('pengguna', $follower->id) }}" wire:navigate>{{ $follower->name }}</a>
+                                </div>
                             @empty
                                 <p>Tidak ada Followers</p>
                             @endforelse
@@ -490,17 +492,19 @@
                                 </svg>
                             </button>
                         </div>
-                        <div class="py-8 flex items-center gap-4">
+                        <div class="">
                             @forelse ($user->following as $following)
-                                @if ($following->foto_profil)
-                                    <img class="h-10 w-10 object-cover rounded-full shadow-lg ring-1 ring-white"
-                                        src="{{ Storage::url($following->foto_profil) }}" alt="{{ $following->name }}'s avatar">
-                                @else
-                                    <img class="h-10 w-10 object-cover rounded-full opacity-90 ring-1 ring-white"
-                                        src="{{ asset('images/default-avatar.png') }}" alt="{{ $following->name }}'s avatar">
-                                @endif
+                                <div class="py-3 flex items-center gap-4">
+                                    @if ($following->foto_profil)
+                                        <img class="h-10 w-10 object-cover rounded-full shadow-lg ring-1 ring-white"
+                                            src="{{ Storage::url($following->foto_profil) }}" alt="{{ $following->name }}'s avatar">
+                                    @else
+                                        <img class="h-10 w-10 object-cover rounded-full opacity-90 ring-1 ring-white"
+                                            src="{{ asset('images/default-avatar.png') }}" alt="{{ $following->name }}'s avatar">
+                                    @endif
 
-                                <a href="{{ route('pengguna', $following->id) }}" wire:navigate>{{ $following->name }}</a>
+                                    <a href="{{ route('pengguna', $following->id) }}" wire:navigate>{{ $following->name }}</a>
+                                </div>
                             @empty
                                 <p>Tidak ada Following</p>
                             @endforelse
