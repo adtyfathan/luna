@@ -6,6 +6,8 @@ use Livewire\Component;
 use App\Models\User;
 use Livewire\Attributes\Layout;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Post;
+use App\Models\Like;
 
 class Pengguna extends Component
 {
@@ -17,6 +19,7 @@ class Pengguna extends Component
     public $showFollowingModal = false;
     public $followerCount;
     public $followingCount;
+    public $posts;
 
     public function mount($userId)
     {
@@ -46,6 +49,15 @@ class Pengguna extends Component
 
         $this->followerCount = $this->user->followerCount;
         $this->followingCount = $this->user->followingCount;
+
+        $this->posts = Post::with([
+            'gambarPost',
+            'like',
+            'komentar'
+        ])
+            ->where('author_id', $userId)
+            ->orderBy('created_at', 'desc')
+            ->get();
     }
 
     public function getJobTypeLabel($type)
@@ -149,6 +161,28 @@ class Pengguna extends Component
     {
         $this->showFollowersModal = false;
         $this->showFollowingModal = false;
+    }
+
+    public function redirectToPost($postId){
+        return $this->redirect(route('post.show', $postId), navigate: true);
+    }
+
+    public function toggleLike($postId)
+    {
+        $like = Like::where('post_id', $postId)
+            ->where('user_id', Auth::id())
+            ->first();
+
+        if ($like) {
+            $like->delete();
+        } else {
+            Like::create([
+                'post_id' => $postId,
+                'user_id' => Auth::id(),
+            ]);
+        }
+
+
     }
 
     #[Layout('layouts.app')]

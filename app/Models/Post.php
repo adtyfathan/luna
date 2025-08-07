@@ -12,7 +12,9 @@ class Post extends Model
     protected $table = 'post';
 
     protected $fillable = [
-        'konten'
+        'konten',
+        'author_type',
+        'author_id'
     ];
 
     // Polymorphic

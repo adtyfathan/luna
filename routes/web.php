@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Beranda;
-
+use App\Livewire\Edukasi;
+use App\Livewire\Materi;
 // Pengalaman
 use App\Livewire\Pengalaman\Create as CreatePengalaman;
 use App\Livewire\Pengalaman\Edit as EditPengalaman;
@@ -14,12 +15,16 @@ use App\Livewire\Pendidikan\Edit as EditPendidikan;
 // Post
 use App\Livewire\Post\Create as CreatePost;
 use App\Livewire\Post\Edit as EditPost;
+use App\Livewire\Post\Show as ShowPost;
 
 use App\Livewire\Pengguna;
 
 use App\Livewire\Koneksi;
 
+
 Route::get('/', Beranda::class)->name('beranda');
+Route::get('/edukasi', Edukasi::class)->name('edukasi');
+Route::get('/edukasi/{materiId}', Materi::class)->name('materi');
 
 Route::middleware(['auth'])->group(function(){
     Route::view('profile', 'profile')
@@ -39,6 +44,7 @@ Route::middleware(['auth'])->group(function(){
     Route::prefix('/post')->name('post')->group(function () {
         Route::get('/create', CreatePost::class)->name('.create');
         Route::get('/edit/{postId}', EditPost::class)->name('.edit');
+        Route::get('/show/{postId}', ShowPost::class)->name('.show');
     });
 
     Route::get('/pengguna/{userId}', Pengguna::class)->name('pengguna');
