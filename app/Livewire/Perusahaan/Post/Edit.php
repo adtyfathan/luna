@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Post;
+namespace App\Livewire\Perusahaan\Post;
 
 use Livewire\Component;
 use Livewire\Attributes\Layout;
@@ -9,6 +9,7 @@ use App\Models\Post;
 use App\Models\GambarPost;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Jabatan;
 
 class Edit extends Component
 {
@@ -37,10 +38,14 @@ class Edit extends Component
     {
         $this->post = Post::find($postId);
 
-        // Check if user owns this post
-        if ($this->post->author_id !== Auth::id()) {
-            abort(403, 'Unauthorized action.');
-        }
+        if (!$this->post) abort(404, 'Post not found.');
+
+        $isOwner = Jabatan::where('user_id', Auth::user()->id)
+            ->where('perusahaan_id', $this->post->author_id)
+            ->where('status_id', 3)
+            ->exists();
+
+        if (!$isOwner) abort(403, 'Unauthorized.');
 
         $this->konten = $this->post->konten;
 
@@ -142,7 +147,7 @@ class Edit extends Component
 
             session()->flash('success', 'Post updated successfully!');
 
-            return $this->redirect(route('profile'), navigate: true);
+            return $this->redirect(route('perusahaan.post.show', $this->post->id), navigate: true);
 
         } catch (\Exception $e) {
             session()->flash('error', 'Failed to update post. Please try again.');
@@ -151,12 +156,12 @@ class Edit extends Component
 
     public function getTotalImagesProperty()
     {
-        return count(value: $this->existingImages) + count($this->images) - count($this->imagesToDelete);
+        return count($this->existingImages) + count($this->images) - count($this->imagesToDelete);
     }
 
     #[Layout('layouts.app')]
     public function render()
     {
-        return view('livewire.post.edit');
+        return view('livewire.perusahaan.post.edit');
     }
 }

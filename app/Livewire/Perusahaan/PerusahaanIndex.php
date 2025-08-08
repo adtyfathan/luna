@@ -103,8 +103,15 @@ class PerusahaanIndex extends Component
         }
     }
 
-    public function redirectToPost($postId){
+    public function deletePost($postId){
+        Post::find($postId)->delete();
 
+        session()->flash('success', 'Post berhasil dihapus.');
+        return $this->redirect(route('perusahaan.index', $this->perusahaan->id), navigate: true);
+    }
+
+    public function redirectToPost($postId){
+        return $this->redirect(route('perusahaan.post.show', $postId), true);
     }
 
 

@@ -24,6 +24,10 @@ use App\Livewire\Pengguna;
 
 use App\Livewire\Koneksi;
 
+use App\Livewire\Perusahaan\Post\Create as CreatePerusahaanPost;
+use App\Livewire\Perusahaan\Post\Edit as EditPerusahaanPost;
+use App\Livewire\Perusahaan\Post\Show as ShowPerusahaanPost;
+
 Route::get('/', Beranda::class)->name('beranda');
 Route::get('/edukasi', Edukasi::class)->name('edukasi');
 Route::get('/edukasi/{materiId}', Materi::class)->name('materi');
@@ -56,6 +60,12 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/create', CreatePerusahaan::class)->name('.create');
         Route::get('/edit/{perusahaanId}', EditPerusahaan::class)->name('.edit');
         Route::get('/index/{perusahaanId}', PerusahaanIndex::class)->name('.index');
+
+        Route::prefix('/post')->name('.post')->group(function () {
+            Route::get('/create/{perusahaanId}', CreatePerusahaanPost::class)->name('.create');
+            Route::get('/edit/{postId}', EditPerusahaanPost::class)->name('.edit');
+            Route::get('/show/{postId}', ShowPerusahaanPost::class)->name('.show');
+        });
     });
 });
 

@@ -155,16 +155,23 @@
                     <!-- Posts Section -->
                     <div
                         class="bg-white rounded-xl shadow-lg border border-blue-100 p-6 bg-gradient-to-br from-white to-blue-50/50">
-                        <h2 class="text-xl font-bold text-gray-900 mb-4 flex items-center">
-                            <div
-                                class="h-8 w-8 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mr-3">
-                                <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                </svg>
-                            </div>
-                            Postingan
-                        </h2>
+                        <div class="flex justify-between items-center">
+                            <h2 class="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                                <div class="h-8 w-8 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mr-3">
+                                    <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                    </svg>
+                                </div>
+                                Postingan
+                            </h2>
+
+                            @if ($isOwner)
+                                <a href="{{ route('perusahaan.post.create', $perusahaan->id) }}"
+                                    class="bg-blue-500 text-white py-2 px-6 text-sm rounded-lg font-semibold" wire:navigate>Tambah Postingan</a>
+                            @endif
+
+                        </div>
 
                         @forelse ($posts as $post)
                             <div class="bg-white cursor-pointer my-4 border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200"
@@ -185,6 +192,28 @@
                                         </div>
                                         <div>
                                             <p class="mt-1 text-sm text-gray-500">{{ $post->created_at->diffForHumans() }}</p>
+                                            <div class="flex justify-end gap-3">
+                                                @if ($isOwner)
+                                                    {{-- edit --}}
+                                                    <a href="{{ route('perusahaan.post.edit', $post->id) }}"
+                                                        class="inline-flex items-center justify-center rounded-lg transition-colors duration-200" wire:navigate>
+                                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                                            <path
+                                                                d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
+                                                        </svg>
+                                                    </a>
+
+                                                    {{-- delete --}}
+                                                    <button wire:click="deletePost({{ $post->id }})"
+                                                        class="inline-flex items-center justify-center rounded-lg transition-colors duration-200"
+                                                        onclick="return confirm('Anda yakin menghapus postingan ini?')">
+                                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                                            <path
+                                                                d="M9 3V4H4V6H5V19C5 20.1 5.9 21 7 21H17C18.1 21 19 20.1 19 19V6H20V4H15V3H9ZM7 6H17V19H7V6ZM9 8V17H11V8H9ZM13 8V17H15V8H13Z" />
+                                                        </svg>
+                                                    </button>
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
