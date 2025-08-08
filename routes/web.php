@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Beranda;
+use App\Livewire\Perusahaan\CreatePerusahaan;
+use App\Livewire\Perusahaan\EditPerusahaan;
+use App\Livewire\Perusahaan\PerusahaanIndex;
 use App\Livewire\Edukasi;
 use App\Livewire\Materi;
 // Pengalaman
@@ -20,7 +23,6 @@ use App\Livewire\Post\Show as ShowPost;
 use App\Livewire\Pengguna;
 
 use App\Livewire\Koneksi;
-
 
 Route::get('/', Beranda::class)->name('beranda');
 Route::get('/edukasi', Edukasi::class)->name('edukasi');
@@ -50,6 +52,11 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/pengguna/{userId}', Pengguna::class)->name('pengguna');
 
     Route::get('/koneksi', Koneksi::class)->name('koneksi');
+    Route::prefix('/perusahaan')->name('perusahaan')->group(function () {
+        Route::get('/create', CreatePerusahaan::class)->name('.create');
+        Route::get('/edit/{perusahaanId}', EditPerusahaan::class)->name('.edit');
+        Route::get('/index/{perusahaanId}', PerusahaanIndex::class)->name('.index');
+    });
 });
 
 require __DIR__.'/auth.php';

@@ -13,7 +13,7 @@
         </div>
         <div class="ml-3 flex-1">
             <div class="flex items-center">
-                <h3 class="text-sm font-semibold text-gray-900">{{ $post->author->name }}</h3>
+                <a href="{{ route('pengguna', $post->author->id) }}" wire:navigate class="text-sm font-semibold text-gray-900">{{ $post->author->name }}</a>
             </div>
             @if(isset($post->author->headline))
                 <p class="text-xs text-gray-500">{{ $post->author->headline }}</p>

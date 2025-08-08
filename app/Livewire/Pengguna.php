@@ -181,8 +181,6 @@ class Pengguna extends Component
                 'user_id' => Auth::id(),
             ]);
         }
-
-
     }
 
     #[Layout('layouts.app')]

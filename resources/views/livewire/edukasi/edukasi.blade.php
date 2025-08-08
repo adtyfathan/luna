@@ -5,20 +5,12 @@
     <!-- Filter Tabs -->
     <div class="mb-8">
         <nav class="flex space-x-8">
-            <!-- <button 
-                class="pb-2 text-lg font-medium transition-colors">
-                Semua
-            </button>
-            <button 
-                class="pb-2 text-lg font-medium transition-colors">
-                Finansial
-            </button>
-            <button 
-                class="pb-2 text-lg font-medium transition-colors">
-                Pemasaran
-            </button> -->
             <div class="flex-1"></div>
-            <input type="text" class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors" placeholder="Cari materi...">
+            <input 
+                type="text" 
+                wire:model.live="search"
+                class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors" 
+                placeholder="Cari materi...">
         </nav>
     </div>
 
@@ -45,8 +37,13 @@
     @endforeach
     </div>
     
+    <!-- Pagination Links -->
+    <div class="mt-8">
+        {{ $edukasis->links() }}
+    </div>
+    
     <!-- Empty State -->
-    @if (empty($edukasis))
+    @if ($edukasis->count() == 0)
         <div class="text-center py-12">
             <div class="mx-auto h-12 w-12 text-gray-400 mb-4">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -54,7 +51,13 @@
                 </svg>
             </div>
             <h3 class="text-lg font-medium text-gray-900 mb-2">Tidak ada materi tersedia</h3>
-            <p class="text-gray-500">Belum ada materi untuk kategori yang dipilih.</p>
+            <p class="text-gray-500">
+                @if($search)
+                    Tidak ada materi yang cocok dengan pencarian "{{ $search }}".
+                @else
+                    Belum ada materi untuk kategori yang dipilih.
+                @endif
+            </p>
         </div>
     @endif
 </div>

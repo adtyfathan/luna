@@ -39,6 +39,11 @@ class Perusahaan extends Model
         return $this->hasMany(FollowerPerusahaan::class, 'perusahaan_id');
     }
 
+    public function followingPerusahaan()
+    {
+        return $this->belongsTo(FollowerPerusahaan::class, 'user_id');
+    }
+
     public function jabatan()
     {
         return $this->hasMany(Jabatan::class, 'perusahaan_id');

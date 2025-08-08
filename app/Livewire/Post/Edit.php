@@ -38,7 +38,7 @@ class Edit extends Component
         $this->post = Post::find($postId);
 
         // Check if user owns this post
-        if ($this->post->author_id !== Auth::id() || $this->post->author_type !== 'user') {
+        if ($this->post->author_id !== Auth::id()) {
             abort(403, 'Unauthorized action.');
         }
 

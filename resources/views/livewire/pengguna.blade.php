@@ -400,7 +400,7 @@
 
                         @forelse ($posts as $post)
                             <div
-                                class="bg-white my-4 border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200"
+                                class="bg-white cursor-pointer my-4 border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200"
                                 wire:click="redirectToPost({{ $post->id }})">
                                 <!-- Post Header -->
                                 <div class="p-6 border-b border-gray-100">
