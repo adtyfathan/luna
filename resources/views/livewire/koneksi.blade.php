@@ -27,10 +27,10 @@
                 </div>
                 
                 <!-- Results Count -->
-                @if($users->total() > 0)
+                @if($results->count() > 0)
                     <div class="mb-6">
                         <p class="text-sm text-gray-700">
-                            Showing {{ $users->firstItem() }}-{{ $users->lastItem() }} of {{ $users->total() }} people
+                            Showing {{ $results->count() }} results
                             @if($search)
                                 for "<span class="font-semibold">{{ $search }}</span>"
                             @endif
@@ -38,64 +38,82 @@
                     </div>
                 @endif
                 
-                <!-- Users Grid -->
+                <!-- Results Grid -->
                 <div class="flex flex-col space-y-4 mb-8">
-                    @forelse($users as $user)
+                    @forelse($results as $item)
                         <div
                             class="flex items-center bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200 px-6 py-4">
-                            <!-- Profile Image -->
+                            <!-- Profile/Logo Image -->
                             <div class="flex-shrink-0">
-                                @if($user->foto_profil)
+                                @if($item->image)
                                     <img class="h-16 w-16 rounded-full object-cover border-4 border-white shadow-sm"
-                                        src="{{ Storage::url($user->foto_profil) }}" alt="{{ $user->name }}">
+                                        src="{{ Storage::url($item->image) }}" alt="{{ $item->display_name }}">
                                 @else
                                     <img class="h-16 w-16 object-cover rounded-full opacity-90" src="{{ asset('images/default-avatar.png') }}"
-                                        alt="{{ $user->name }}'s avatar">
+                                        alt="{{ $item->display_name }}'s avatar">
                                 @endif
                             </div>
-                            <!-- User Info -->
+
+                            <!-- Info -->
                             <div class="ml-6 flex-1 min-w-0">
-                                <a href="{{ route('pengguna', $user->id) }}" class="text-lg font-semibold text-gray-900 truncate" wire:navigate>{{ $user->name }}</a>
-                                @if($user->headline)
-                                    <p class="text-sm text-gray-600 mt-1 line-clamp-2">{{ $user->headline }}</p>
+                                @if($item->type === 'user')
+                                    <a href="{{ route('pengguna', $item->id) }}" class="text-lg font-semibold text-gray-900 truncate"
+                                        wire:navigate>
+                                        {{ $item->display_name }}
+                                    </a>
+                                @else
+                                    <a href="{{ route('perusahaan.index', $item->id) }}" class="text-lg font-semibold text-gray-900 truncate"
+                                        wire:navigate>
+                                        {{ $item->display_name }}
+                                    </a>
+                                @endif
+
+                                @if($item->headline)
+                                    <p class="text-sm text-gray-600 mt-1 line-clamp-2">{{ $item->headline }}</p>
                                 @endif
                             </div>
-                            <!-- Action Buttons -->
-                            <div class="flex space-x-2 ml-6">
-                                @auth
-                                    @if(auth()->id() !== $user->id)
-                                        <button wire:click="followUser({{ $user->id }})" class="px-5 py-2 rounded-md text-sm font-semibold transition-all duration-200 shadow-sm
-                                            bg-gradient-to-r
-                                            {{ auth()->user()->following->contains($user->id)
-                ? 'from-white-200 to-blue-100 text-black hover:bg-blue-100 border border-blue-200'
-                : 'from-blue-500 to-blue-700 text-white hover:from-blue-600 hover:to-blue-800 border border-blue-500'
-                                            }}">
-                                            @if(auth()->user()->following->contains($user->id))
-                                                <svg class="inline h-4 w-4 mr-1 text-blue-700" fill="currentColor" viewBox="0 0 20 20">
-                                                    <path fill-rule="evenodd"
-                                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                                        clip-rule="evenodd" />
-                                                </svg>
-                                                <span>Following</span>
-                                            @else
-                                                <span>Follow</span>
-                                            @endif
-                                        </button>
-                                    @endif
-                                @endauth
-                            </div>
+
+                            <!-- Follow Button (only for user type) -->
+                            @if($item->type === 'user')
+                                <div class="flex space-x-2 ml-6">
+                                    @auth
+                                        @if(auth()->id() !== $item->id)
+                                                    <button wire:click="followUser({{ $item->id }})" class="px-5 py-2 rounded-md text-sm font-semibold transition-all duration-200 shadow-sm
+                                                                        bg-gradient-to-r
+                                                                        {{ auth()->user()->following->contains($item->id)
+                                            ? 'from-white-200 to-blue-100 text-black hover:bg-blue-100 border border-blue-200'
+                                            : 'from-blue-500 to-blue-700 text-white hover:from-blue-600 hover:to-blue-800 border border-blue-500'
+                                                        }}">
+                                                        @if(auth()->user()->following->contains($item->id))
+                                                            <svg class="inline h-4 w-4 mr-1 text-blue-700" fill="currentColor" viewBox="0 0 20 20">
+                                                                <path fill-rule="evenodd"
+                                                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                                    clip-rule="evenodd" />
+                                                            </svg>
+                                                            <span>Following</span>
+                                                        @else
+                                                            <span>Follow</span>
+                                                        @endif
+                                                    </button>
+                                        @endif
+                                    @endauth
+                                </div>
+                            @endif
                         </div>
                     @empty
-
+                        <div class="text-center py-8 text-gray-500">
+                            <p class="text-sm font-medium">Tidak ada hasil ditemukan</p>
+                        </div>
                     @endforelse
                 </div>
+
                 
                 <!-- Pagination -->
-                @if($users->hasPages())
+                {{-- @if($users->hasPages())
                     <div class="flex justify-center">
                         {{ $users->links() }}
                     </div>
-                @endif
+                @endif --}}
             </div>
 
             <div class="lg:col-span-1 space-y-6 w-full">

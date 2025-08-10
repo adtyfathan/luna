@@ -36,7 +36,7 @@
                     </a>
 
                     {{-- delete --}}
-                    <button wire:click="deletePost({{ $post->id }})"
+                    <button wire:click="deletePost"
                         class="inline-flex items-center justify-center rounded-lg transition-colors duration-200"
                         onclick="return confirm('Anda yakin menghapus postingan ini?')">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">

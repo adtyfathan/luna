@@ -30,6 +30,70 @@
             <!-- Page Content -->
             <main>
                 {{ $slot }}
+                <footer class="bg-gray-900 text-gray-300 py-10 mt-10">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                
+                            <!-- Logo & About -->
+                            <div>
+                                <h2 class="text-2xl font-bold text-white">YourApp</h2>
+                                <p class="mt-3 text-sm leading-6">
+                                    A short description about your application. This can include the mission or key value proposition.
+                                </p>
+                            </div>
+                
+                            <!-- Quick Links -->
+                            <div>
+                                <h3 class="text-lg font-semibold text-white mb-3">Quick Links</h3>
+                                <ul class="space-y-2">
+                                    <li><a href="" class="hover:text-white transition">Home</a></li>
+                                    <li><a href="" class="hover:text-white transition">About</a></li>
+                                    <li><a href="" class="hover:text-white transition">Services</a></li>
+                                    <li><a href="" class="hover:text-white transition">Contact</a></li>
+                                </ul>
+                            </div>
+                
+                            <!-- Resources -->
+                            <div>
+                                <h3 class="text-lg font-semibold text-white mb-3">Resources</h3>
+                                <ul class="space-y-2">
+                                    <li><a href="" class="hover:text-white transition">Blog</a></li>
+                                    <li><a href="" class="hover:text-white transition">Help Center</a></li>
+                                    <li><a href="" class="hover:text-white transition">Terms of Service</a></li>
+                                    <li><a href="" class="hover:text-white transition">Privacy Policy</a></li>
+                                </ul>
+                            </div>
+                
+                            <!-- Social -->
+                            <div>
+                                <h3 class="text-lg font-semibold text-white mb-3">Follow Us</h3>
+                                <div class="flex space-x-4">
+                                    <a href="" class="hover:text-white transition">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M22.46 6c-.77.35-1.6.59-2.46.7..."></path>
+                                        </svg>
+                                    </a>
+                                    <a href="" class="hover:text-white transition">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M19 0h-14c-2.76..."></path>
+                                        </svg>
+                                    </a>
+                                    <a href="" class="hover:text-white transition">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 2.04c-5.5 0-9.96..."></path>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                
+                        <!-- Bottom -->
+                        <div class="mt-10 border-t border-gray-700 pt-6 text-center text-sm">
+                            © {{ date('Y') }} YourApp. All rights reserved.
+                        </div>
+                    </div>
+                </footer>
+
             </main>
         </div>
     </body>

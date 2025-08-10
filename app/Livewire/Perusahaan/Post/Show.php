@@ -93,6 +93,12 @@ class Show extends Component
         $this->commentsCount = $this->post->komentar()->count();
     }
 
+    public function deletePost(){
+        $this->post->delete();
+
+        return $this->redirect(route('beranda'), true);
+    }
+
     #[Layout('layouts.app')]
     public function render()
     {

@@ -20,7 +20,31 @@
             @endif
             
         </div>
-        <p class="text-xs text-gray-400">{{ $post->created_at->diffForHumans() }}</p>
+        <div>
+            <p class="text-xs text-gray-400">{{ $post->created_at->diffForHumans() }}</p>
+            <div class="flex justify-end gap-3">
+                @if ($isPoster)
+                    {{-- edit --}}
+                    <a href="{{ route('post.edit', $post->id) }}"
+                        class="inline-flex items-center justify-center rounded-lg transition-colors duration-200" wire:navigate>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
+                        </svg>
+                    </a>
+
+                    {{-- delete --}}
+                    <button wire:click="deletePost"
+                        class="inline-flex items-center justify-center rounded-lg transition-colors duration-200"
+                        onclick="return confirm('Anda yakin menghapus postingan ini?')">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M9 3V4H4V6H5V19C5 20.1 5.9 21 7 21H17C18.1 21 19 20.1 19 19V6H20V4H15V3H9ZM7 6H17V19H7V6ZM9 8V17H11V8H9ZM13 8V17H15V8H13Z" />
+                        </svg>
+                    </button>
+                @endif
+            </div>
+        </div>
     </div>
 
     <!-- Post Content -->

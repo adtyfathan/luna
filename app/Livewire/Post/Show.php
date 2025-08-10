@@ -16,6 +16,7 @@ class Show extends Component
     public $isLiked = false;
     public $likesCount = 0;
     public $commentsCount = 0;
+    public $isPoster;
 
     public function mount($postId)
     {
@@ -24,6 +25,8 @@ class Show extends Component
 
         $this->checkIfLiked();
         $this->updateCounts();
+
+        $this->isPoster = $this->post->author->id === Auth::id();
     }
 
     public function toggleLike()
@@ -84,6 +87,13 @@ class Show extends Component
     {
         $this->likesCount = $this->post->like()->count();
         $this->commentsCount = $this->post->komentar()->count();
+    }
+
+    public function deletePost()
+    {
+        $this->post->delete();
+
+        return $this->redirect(route('beranda'), true);
     }
 
     #[Layout('layouts.app')]

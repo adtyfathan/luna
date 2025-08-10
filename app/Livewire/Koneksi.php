@@ -8,6 +8,7 @@ use Livewire\WithPagination;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Follow;
+use App\Models\Perusahaan;
 
 class Koneksi extends Component
 {
@@ -68,19 +69,30 @@ class Koneksi extends Component
     #[Layout('layouts.app')]
     public function render()
     {
-        if (empty($this->search)) {
-            $users = User::query()->whereRaw('1 = 0')->paginate($this->perPage);
-        } else {
-            $searchTerm = '%' . $this->search . '%';
+        $searchTerm = '%' . $this->search . '%';
 
-            $users = User::where(function ($q) use ($searchTerm) {
-                $q->where('name', 'like', $searchTerm)
-                    ->orWhere('headline', 'like', $searchTerm);
-            })->paginate($this->perPage);
+        if (empty($this->search)) {
+            $results = collect(); // Empty result
+        } else {
+            // Search users
+            $users = User::where('name', 'like', $searchTerm)
+                ->orWhere('headline', 'like', $searchTerm)
+                ->select('id', 'name as display_name', 'headline', 'foto_profil as image', \DB::raw("'user' as type"))
+                ->get();
+
+            // Search companies
+            $companies = Perusahaan::where('nama_perusahaan', 'like', $searchTerm)
+                ->orWhere('headline', 'like', $searchTerm)
+                ->select('id', 'nama_perusahaan as display_name', 'headline', 'logo as image', \DB::raw("'perusahaan' as type"))
+                ->get();
+
+            // Merge into one collection
+            $results = $users->merge($companies);
         }
 
         return view('livewire.koneksi', [
-            'users' => $users
+            'results' => $results
         ]);
     }
+
 }
