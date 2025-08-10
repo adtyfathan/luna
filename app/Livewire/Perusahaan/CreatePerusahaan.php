@@ -56,10 +56,11 @@ class CreatePerusahaan extends Component
             'kota_id' => $this->kota,
         ]);
 
-        $path = $this->logo->store('company-logo', 'public');
-        $perusahaan->logo = $path;
-
-        $perusahaan->save();
+        if($this->logo) {
+            $path = $this->logo->store('company-logo', 'public');
+            $perusahaan->logo = $path;
+            $perusahaan->save();
+        }
 
         Jabatan::create([
             'user_id' => Auth::user()->id,

@@ -10,6 +10,7 @@ use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Jabatan;
+use App\Models\Kategori;
 use App\Models\Like;
 
 class PerusahaanIndex extends Component
@@ -17,6 +18,8 @@ class PerusahaanIndex extends Component
     public $activeTab = 'home'; // home || posts || products
     public $perusahaan;
     public $products;
+    public $search;
+    public $kategoris;
     public $posts;
     public $isOwner;
     public $isFollowing = false;
@@ -53,6 +56,33 @@ class PerusahaanIndex extends Component
             ->exists();
 
         $this->followerCount = $this->perusahaan->followerCount;
+
+        $this->products = Produk::with('kategori')
+            ->where('perusahaan_id', $perusahaanId)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $this->kategoris = Kategori::count();
+    }
+
+    public function updatedSearch()
+    {
+        $this->products = Produk::with('kategori')
+            ->where('perusahaan_id', $this->perusahaan->id)
+            ->where('nama_produk', 'like', '%' . $this->search . '%')
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
+
+    public function deleteProduct($productId)
+    {
+        $product = Produk::find($productId);
+        if ($product && $product->perusahaan_id == $this->perusahaan->id) {
+            $product->delete();
+            session()->flash('message', 'Produk berhasil dihapus!');
+        } else {
+            session()->flash('error', 'Produk tidak ditemukan atau tidak dapat dihapus.');
+        }
     }
 
     public function setActiveTab($tab)

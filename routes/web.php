@@ -20,6 +20,11 @@ use App\Livewire\Post\Create as CreatePost;
 use App\Livewire\Post\Edit as EditPost;
 use App\Livewire\Post\Show as ShowPost;
 
+// Produk
+use App\Livewire\Perusahaan\Produk\Create as CreateProduk;
+use App\Livewire\Perusahaan\Produk\Edit as EditProduk;
+use App\Livewire\Perusahaan\Produk\Show as ShowProduk;
+
 use App\Livewire\Pengguna;
 
 use App\Livewire\Koneksi;
@@ -65,6 +70,12 @@ Route::middleware(['auth'])->group(function(){
             Route::get('/create/{perusahaanId}', CreatePerusahaanPost::class)->name('.create');
             Route::get('/edit/{postId}', EditPerusahaanPost::class)->name('.edit');
             Route::get('/show/{postId}', ShowPerusahaanPost::class)->name('.show');
+        });
+
+        Route::prefix('/produk')->name('.produk')->group(function () {
+            Route::get('/create/{perusahaanId}', CreateProduk::class)->name('.create');
+            Route::get('/edit/{produkId}', EditProduk::class)->name('.edit');
+            Route::get('/show/{produkId}', ShowProduk::class)->name('.show');
         });
     });
 });
