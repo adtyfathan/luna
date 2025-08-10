@@ -23,7 +23,7 @@ new class extends Component {
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('beranda') }}" wire:navigate>
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                        <x-application-logo />
                     </a>
                 </div>
 
@@ -42,11 +42,13 @@ new class extends Component {
                     </div>
                 @endif
                 
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('edukasi')" :active="request()->routeIs('edukasi')" wire:navigate>
-                        {{ __('Edukasi') }}
-                    </x-nav-link>
-                </div>
+                @if (Auth::user())
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('edukasi')" :active="request()->routeIs('edukasi')" wire:navigate>
+                            {{ __('Edukasi') }}
+                        </x-nav-link>
+                    </div>
+                @endif
             </div>
 
             <!-- Settings Dropdown -->

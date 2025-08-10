@@ -14,7 +14,7 @@
                         @else
                             <div
                                 class="h-10 w-10 rounded-full bg-gradient-to-br from-white to-blue-100 flex items-center justify-center shadow-sm">
-                                <img class="h-28 w-28 object-cover rounded-full opacity-90"
+                                <img class="h-10 w-10 object-cover rounded-full opacity-90"
                                     src="{{ asset('images/default-avatar.png') }}" alt="{{ $user->name }}'s avatar">
                             </div>
                         @endif
