@@ -61,6 +61,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/pengguna/{userId}', Pengguna::class)->name('pengguna');
 
     Route::get('/koneksi', Koneksi::class)->name('koneksi');
+    
     Route::prefix('/perusahaan')->name('perusahaan')->group(function () {
         Route::get('/create', CreatePerusahaan::class)->name('.create');
         Route::get('/edit/{perusahaanId}', EditPerusahaan::class)->name('.edit');

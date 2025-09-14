@@ -47,6 +47,7 @@ class PerusahaanIndex extends Component
             'like',
             'komentar'
         ])->where('author_id', $this->perusahaan->id)
+        ->where('author_type', Perusahaan::class)
         ->orderBy('created_at', 'desc')
         ->get();
 

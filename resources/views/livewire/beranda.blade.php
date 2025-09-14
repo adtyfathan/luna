@@ -49,8 +49,8 @@
                     @endif
 
                     @php
-                        $latestPengalaman = auth()->user()->pengalaman()->latest()->first();
-                        // dump($latestPengalaman);
+    $latestPengalaman = auth()->user()->pengalaman()->latest()->first();
+    // dump($latestPengalaman);
                     @endphp
 
                     @if ($latestPengalaman)
@@ -65,8 +65,8 @@
                     @endif
 
                     @php
-                        $latestPendidikan = auth()->user()->pendidikan()->latest()->first();
-                        // dump($latestPendidikan);
+    $latestPendidikan = auth()->user()->pendidikan()->latest()->first();
+    // dump($latestPendidikan);
                     @endphp
 
                     @if ($latestPendidikan)
@@ -144,90 +144,103 @@
         <div class="lg:col-span-3 space-y-6">
             @foreach ($posts as $post)
                 @if ($post->author_type === 'App\Models\User' || $post->author_type === 'App\Models\Perusahaan')
-                    <!-- Post Card -->
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
-                        <!-- Author Info -->
-                        <div class="flex items-center gap-4 p-4 cursor-pointer"
-                            wire:click="redirectToPost({{ $post->id }}, '{{ $post->author_type }}')">
-                            @php
-        $avatar = $post->author_type === 'App\\Models\\User'
-            ? ($post->author->foto_profil ? Storage::url($post->author->foto_profil) : asset('images/default-avatar.png'))
-            : ($post->author->logo ? Storage::url($post->author->logo) : asset('images/default-company.png'));
-                            @endphp
-                            <img src="{{ $avatar }}" class="h-14 w-14 object-cover rounded-full border border-gray-300">
+                                <!-- Post Card -->
+                                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
+                                    <!-- Author Info -->
+                                    <div class="flex items-center gap-4 p-4 cursor-pointer"
+                                        wire:click="redirectToPost({{ $post->id }}, '{{ $post->author_type }}')">
+                                        @php
+                    $avatar = $post->author_type === 'App\\Models\\User'
+                        ? ($post->author->foto_profil ? Storage::url($post->author->foto_profil) : asset('images/default-avatar.png'))
+                        : ($post->author->logo ? Storage::url($post->author->logo) : asset('images/default-company.png'));
+                                        @endphp
+                                        <img src="{{ $avatar }}" class="h-14 w-14 object-cover rounded-full border border-gray-300">
 
-                            <div>
-                                <h2 class="text-gray-900 font-semibold text-sm sm:text-base hover:underline">
-                                    @if ($post->author_type === 'App\\Models\\User')
-                                        <a href="{{ route('pengguna', $post->author->id) }}" wire:navigate>{{ $post->author->name }}</a>
-                                    @else
-                                        <a href="{{ route('perusahaan.index', $post->author->id) }}"
-                                            wire:navigate>{{ $post->author->nama_perusahaan }}</a>
-                                    @endif
-                                </h2>
-                                <p class="text-gray-500 text-xs sm:text-sm">
-                                    {{ $post->author->headline ?? '' }}
-                                </p>
-                                <span class="text-gray-400 text-xs">{{ $post->created_at->diffForHumans() }}</span>
-                            </div>
-                        </div>
-
-                        <!-- Post Content -->
-                        <div class="px-4 pb-4">
-                            <p class="text-gray-800 text-sm sm:text-base mb-3 whitespace-pre-line">
-                                {{ $post->konten }}
-                            </p>
-
-                            <!-- Post Images -->
-                            @if($post->gambarPost->count() > 0)
-                                @if($post->gambarPost->count() === 1)
-                                    <div class="rounded-lg overflow-hidden">
-                                        <img src="{{ asset('storage/' . $post->gambarPost->first()->url) }}"
-                                            class="w-full max-h-[500px] object-cover">
-                                    </div>
-                                @else
-                                    <div class="grid grid-cols-2 gap-1 rounded-lg overflow-hidden">
-                                        @foreach($post->gambarPost->take(4) as $index => $image)
-                                            <div class="relative">
-                                                <img src="{{ asset('storage/' . $image->url) }}" class="w-full h-48 object-cover">
-                                                @if($loop->last && $post->gambarPost->count() > 4)
-                                                    <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                                                        <span class="text-white font-semibold text-lg">+{{ $post->gambarPost->count() - 3 }}</span>
-                                                    </div>
+                                        <div>
+                                            <h2 class="text-gray-900 font-semibold text-sm sm:text-base hover:underline">
+                                                @if ($post->author_type === 'App\\Models\\User')
+                                                    <a href="{{ route('pengguna', $post->author->id) }}" wire:navigate>{{ $post->author->name }}</a>
+                                                @else
+                                                    <a href="{{ route('perusahaan.index', $post->author->id) }}"
+                                                        wire:navigate>{{ $post->author->nama_perusahaan }}</a>
                                                 @endif
-                                            </div>
-                                        @endforeach
+                                            </h2>
+                                            <p class="text-gray-500 text-xs sm:text-sm">
+                                                {{ $post->author->headline ?? '' }}
+                                            </p>
+                                            <span class="text-gray-400 text-xs">{{ $post->created_at->diffForHumans() }}</span>
+                                        </div>
                                     </div>
-                                @endif
-                            @endif
-                        </div>
 
-                        <!-- Actions -->
-                        <div class="border-t border-gray-100 flex justify-around text-sm text-gray-500">
-                            <!-- Like -->
-                            <button wire:click="toggleLike({{ $post->id }})"
-                                class="flex items-center gap-2 py-3 px-4 hover:bg-gray-50 w-full justify-center">
-                                <svg class="w-5 h-5 {{ $post->like->where('user_id', Auth::id())->count() ? 'text-red-500' : 'text-gray-400' }}"
-                                    fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 
-                                                            115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" />
-                                </svg>
-                                <span>{{ $post->like->count() }} Suka</span>
-                            </button>
+                                    <!-- Post Content -->
+                                    <div class="px-4 pb-4">
+                                        <p class="text-gray-800 text-sm sm:text-base mb-3 whitespace-pre-line">
+                                            {{ $post->konten }}
+                                        </p>
 
-                            <!-- Comment -->
-                            <div class="flex items-center gap-2 py-3 px-4 hover:bg-gray-50 w-full justify-center cursor-pointer">
-                                <svg class="w-5 h-5 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 
-                                                                  01-4.083-.98L2 17l1.338-3.123C2.493 12.767 
-                                                                  2 11.434 2 10c0-3.866 3.582-7 
-                                                                  8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 
-                                                                  0h-2v2h2V9zM9 9h2v2H9V9z" clip-rule="evenodd"></path>
-                                </svg>
-                                <span>{{ $post->komentar->count() }} Komentar</span>
-                            </div>
-                        </div>
-                    </div>
+                                        <!-- Post Images -->
+                                        @if($post->gambarPost->count() > 0)
+                                            @if($post->gambarPost->count() === 1)
+                                                <div class="rounded-lg overflow-hidden">
+                                                    <img src="{{ asset('storage/' . $post->gambarPost->first()->url) }}"
+                                                        class="w-full max-h-[500px] object-cover">
+                                                </div>
+                                            @else
+                                                <div class="grid grid-cols-2 gap-1 rounded-lg overflow-hidden">
+                                                    @foreach($post->gambarPost->take(4) as $index => $image)
+                                                        <div class="relative">
+                                                            <img src="{{ asset('storage/' . $image->url) }}" class="w-full h-48 object-cover">
+                                                            @if($loop->last && $post->gambarPost->count() > 4)
+                                                                <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                                                                    <span class="text-white font-semibold text-lg">+{{ $post->gambarPost->count() - 3 }}</span>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            @endif
+                                        @endif
+                                    </div>
+
+                                    <!-- Actions -->
+                                    <div class="border-t border-gray-100 flex justify-around text-sm text-gray-500">
+                                        <!-- Like -->
+                                        @auth
+                                            <button wire:click="toggleLike({{ $post->id }})"
+                                                class="flex items-center gap-2 py-3 px-4 hover:bg-gray-50 w-full justify-center">
+                                                <svg class="w-5 h-5 {{ $post->like->where('user_id', Auth::id())->count() ? 'text-red-500' : 'text-gray-400' }}"
+                                                    fill="currentColor" viewBox="0 0 20 20">
+                                                    <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 
+                                                                                    115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" />
+                                                </svg>
+                                                <span>{{ $post->like->count() }} Suka</span>
+                                            </button>
+                                        @endauth
+
+                                        @guest
+                                            <button onclick="window.location='{{ route('login') }}'"
+                                                class="flex items-center gap-2 py-3 px-4 hover:bg-gray-50 w-full justify-center">
+                                                <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 
+                                                                                    115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" />
+                                                </svg>
+                                                <span>{{ $post->like->count() }} Suka</span>
+                                            </button>
+                                        @endguest
+
+                                        <!-- Comment -->
+                                        <div class="flex items-center gap-2 py-3 px-4 hover:bg-gray-50 w-full justify-center cursor-pointer">
+                                            <svg class="w-5 h-5 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 
+                                                                              01-4.083-.98L2 17l1.338-3.123C2.493 12.767 
+                                                                              2 11.434 2 10c0-3.866 3.582-7 
+                                                                              8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 
+                                                                              0h-2v2h2V9zM9 9h2v2H9V9z" clip-rule="evenodd"></path>
+                                            </svg>
+                                            <span>{{ $post->komentar->count() }} Komentar</span>
+                                        </div>
+                                    </div>
+                                </div>
                 @endif
             @endforeach
         </div>

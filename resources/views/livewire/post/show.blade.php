@@ -7,7 +7,8 @@
                     alt="{{ $post->author->name }}">
             @else
                 <div class="h-12 w-12 rounded-full bg-gray-300 flex items-center justify-center">
-                    <span class="text-gray-600 font-medium">{{ substr($post->author->name, 0, 1) }}</span>
+                    <img class="h-12 w-12 object-cover rounded-full border-1 border-gray-300"
+                        src="{{ asset('images/default-avatar.png') }}" alt="Current avatar">
                 </div>
             @endif
         </div>
@@ -130,7 +131,8 @@
                             alt="{{ Auth::user()->name }}">
                     @else
                         <div class="h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center">
-                            <span class="text-gray-600 text-sm font-medium">{{ substr(Auth::user()->name, 0, 1) }}</span>
+                            <img class="h-8 w-8 object-cover rounded-full border-1 border-gray-300"
+                                src="{{ asset('images/default-avatar.png') }}" alt="Current avatar">
                         </div>
                     @endif
                 </div>
@@ -169,7 +171,8 @@
                                     src="{{ asset('storage/' . $comment->user->foto_profil) }}" alt="{{ $comment->user->name }}">
                             @else
                                 <div class="h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center">
-                                    <span class="text-gray-600 text-sm font-medium">{{ substr($comment->user->name, 0, 1) }}</span>
+                                    <img class="h-8 w-8 object-cover rounded-full border-1 border-gray-300"
+                                        src="{{ asset('images/default-avatar.png') }}" alt="Current avatar">
                                 </div>
                             @endif
                         </div>
