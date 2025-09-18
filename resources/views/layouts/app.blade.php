@@ -16,7 +16,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen flex flex-col bg-gray-100">
             <livewire:layout.navigation />
 
             <!-- Page Heading -->
@@ -29,55 +29,52 @@
             @endif
 
             <!-- Page Content -->
-            <main>
+            <main class="flex-1">
                 {{ $slot }}
-                <footer class="bg-gray-900 text-gray-300 py-10 mt-10">
-                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                
-                            <!-- Logo & About -->
-                            <div>
-                                <div class="flex items-center gap-2">
-                                    <x-application-logo />
-                                    <h2 class="text-2xl font-bold text-white">Luna</h2>
-                                </div>
-                                
-                                <p class="mt-3 text-sm leading-6">
-                                    Lapak UMKM Indonesia
-                                </p>
+            </main>
+
+            <footer class="bg-gray-900 text-gray-300 mt-auto">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                    <!-- Top Section -->
+                    <div class="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-10">
+            
+                        <!-- Logo & About -->
+                        <div class="text-center lg:text-left">
+                            <div class="flex items-center justify-center lg:justify-start gap-2">
+                                <x-application-logo class="w-8 h-8 text-white" />
+                                <h2 class="text-2xl font-bold text-white">Luna</h2>
                             </div>
-                
-                            <!-- Quick Links -->
-                            <div>
-                                <h3 class="text-lg font-semibold text-white mb-3">Quick Links</h3>
-                                <ul class="space-y-2">
-                                    <li><a href="" class="hover:text-white transition">Home</a></li>
-                                    <li><a href="" class="hover:text-white transition">About</a></li>
-                                    <li><a href="" class="hover:text-white transition">Services</a></li>
-                                    <li><a href="" class="hover:text-white transition">Contact</a></li>
-                                </ul>
-                            </div>
-                
-                            <!-- Resources -->
-                            <div>
-                                <h3 class="text-lg font-semibold text-white mb-3">Resources</h3>
-                                <ul class="space-y-2">
-                                    <li><a href="" class="hover:text-white transition">Blog</a></li>
-                                    <li><a href="" class="hover:text-white transition">Help Center</a></li>
-                                    <li><a href="" class="hover:text-white transition">Terms of Service</a></li>
-                                    <li><a href="" class="hover:text-white transition">Privacy Policy</a></li>
-                                </ul>
-                            </div>
+                            <p class="mt-3 text-sm leading-6 text-gray-400">
+                                Lapak UMKM Indonesia
+                            </p>
                         </div>
-                
-                        <!-- Bottom -->
-                        <div class="mt-10 border-t border-gray-700 pt-6 text-center text-sm">
-                            © {{ date('Y') }} Luna. All rights reserved.
+            
+                        <!-- Quick Links -->
+                        <div class="text-center lg:text-left">
+                            <h3 class="text-lg font-semibold text-white mb-3">Link Cepat</h3>
+                            <ul class="space-y-2">
+                                <li><a href="{{ route('beranda') }}" class="hover:text-white transition">Beranda</a></li>
+                                @if (Auth::user())
+                                    <li><a href="{{ route('koneksi') }}" class="hover:text-white transition">Koneksi</a></li>
+                                @endif
+                                <li><a href="{{ route('edukasi') }}" class="hover:text-white transition">Edukasi</a></li>
+                                @if (Auth::user())
+                                    <li><a href="{{ route('profile') }}" class="hover:text-white transition">Profil</a></li>
+                                @endif
+                            </ul>
                         </div>
                     </div>
-                </footer>
+            
+                    <!-- Bottom -->
+                    <div class="mt-10 border-t border-gray-700 pt-6">
+                        <p class="text-center text-sm text-gray-400">
+                            © {{ date('Y') }} Luna. All rights reserved.
+                        </p>
+                    </div>
+                </div>
+            </footer>
 
-            </main>
+
         </div>
     </body>
 </html>

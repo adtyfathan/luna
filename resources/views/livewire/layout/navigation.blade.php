@@ -42,13 +42,11 @@ new class extends Component {
                     </div>
                 @endif
                 
-                @if (Auth::user())
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link :href="route('edukasi')" :active="request()->routeIs('edukasi')" wire:navigate>
-                            {{ __('Edukasi') }}
-                        </x-nav-link>
-                    </div>
-                @endif
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('edukasi')" :active="request()->routeIs('edukasi')" wire:navigate>
+                        {{ __('Edukasi') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
@@ -138,6 +136,10 @@ new class extends Component {
                     {{ __('Koneksi') }}
                 </x-responsive-nav-link>
             @endif
+
+            <x-responsive-nav-link :href="route('edukasi')" :active="request()->routeIs('edukasi')" wire:navigate>
+                {{ __('Edukasi') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
