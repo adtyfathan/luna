@@ -45,29 +45,40 @@
                         Logo UMKM <span class="text-gray-400">(Opsional)</span>
                     </label>
                     <div class="flex items-center justify-center w-full">
-                        <label for="logo" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors duration-200">
-                            @if($logo)
-                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                    <svg class="w-8 h-8 mb-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                    </svg>
-                                    <p class="text-sm text-green-600 font-medium">{{ $logo->getClientOriginalName() }}</p>
-                                    <p class="text-xs text-gray-500">Klik untuk mengganti</p>
-                                </div>
+                        <label for="logo"
+                            class="flex flex-col items-center justify-center w-full h-48 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors duration-200">
+                
+                            @if ($logo)
+                                <!-- Preview uploaded image -->
+                                <img src="{{ $logo->temporaryUrl() }}" alt="Preview Logo" class="h-32 object-contain rounded-lg mb-2">
+
+                                <p class="text-sm text-green-600 font-medium">
+                                    {{ $logo->getClientOriginalName() }}
+                                </p>
+                                <p class="text-xs text-gray-500">Klik untuk mengganti</p>
                             @else
+                                <!-- Placeholder if no image yet -->
                                 <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                     <svg class="w-8 h-8 mb-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12">
+                                        </path>
                                     </svg>
-                                    <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Klik untuk upload</span> logo UMKM</p>
+                                    <p class="mb-2 text-sm text-gray-500">
+                                        <span class="font-semibold">Klik untuk upload</span> logo UMKM
+                                    </p>
                                     <p class="text-xs text-gray-500">PNG, JPG atau JPEG (MAX. 2MB)</p>
                                 </div>
                             @endif
+                
                             <input id="logo" type="file" wire:model="logo" accept="image/*" class="hidden">
                         </label>
                     </div>
-                    @error('logo') <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span> @enderror
+                    @error('logo')
+                        <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span>
+                    @enderror
                 </div>
+
 
                 <!-- Nama UMKM  -->
                 <div>
@@ -76,7 +87,8 @@
                     </label>
                     <input type="text" id="name" wire:model="nama_perusahaan" 
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
-                            placeholder="Contoh: Warung Makan Bu Sari">
+                            placeholder="Contoh: Warung Makan Bu Sari"
+                            required>
                     @error('nama_perusahaan') <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span> @enderror
                 </div>
 
@@ -109,7 +121,7 @@
                             Kota UMKM <span class="text-red-500">*</span>
                         </label>
                         <select id="city" wire:model="kota"
-                            class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200" required>
                             <option value="">Pilih Kota</option>
                             @foreach ($kotas as $kotaData)
                                 <option value="{{ $kotaData->id }}">{{ $kotaData->nama_kota }}</option>
@@ -124,7 +136,7 @@
                             Provinsi UMKM <span class="text-red-500">*</span>
                         </label>
                         <select id="province" wire:model="provinsi" 
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200" required>
                             <option value="">Pilih Provinsi</option>
                             @foreach ($provinsis as $provinsiData)
                                 <option value="{{ $provinsiData->id }}">{{ $provinsiData->nama_provinsi }}</option>

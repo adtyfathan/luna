@@ -24,7 +24,7 @@
         </div>
 
         <div>
-            <p class="text-xs text-gray-400">{{ $post->created_at->diffForHumans() }}</p>
+            <p class="text-xs text-gray-400 mb-2">{{ $post->created_at->diffForHumans() }}</p>
             <div class="flex justify-end gap-3">
                 @if ($isOwner)
                     {{-- edit --}}
@@ -65,7 +65,8 @@
                 <!-- Single Image -->
                 <div class="rounded-lg overflow-hidden">
                     <img src="{{ asset('storage/' . $post->gambarPost->first()->url) }}" alt="Post image"
-                        class="w-full h-auto max-h-96 object-cover">
+                        class="w-full h-auto max-h-96 object-cover"
+                        onclick="openImageModal(this.src)">
                 </div>
             @else
                 <!-- Multiple Images Grid -->
@@ -74,11 +75,11 @@
                     @foreach($post->gambarPost as $index => $gambar)
                         @if($post->gambarPost->count() === 3 && $index === 0)
                             <div class="col-span-2">
-                                <img src="{{ asset('storage/' . $gambar->url) }}" alt="Post image" class="w-full h-48 object-cover">
+                                <img src="{{ asset('storage/' . $gambar->url) }}" alt="Post image" class="w-full h-48 object-cover" onclick="openImageModal(this.src)">
                             </div>
                         @elseif($post->gambarPost->count() > 4 && $index === 3)
                             <div class="relative">
-                                <img src="{{ asset('storage/' . $gambar->url) }}" alt="Post image" class="w-full h-32 object-cover">
+                                <img src="{{ asset('storage/' . $gambar->url) }}" alt="Post image" class="w-full h-32 object-cover" onclick="openImageModal(this.src)">
                                 @if($post->gambarPost->count() > 4)
                                     <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                                         <span class="text-white text-lg font-semibold">+{{ $post->gambarPost->count() - 4 }}</span>
@@ -88,7 +89,7 @@
                             @break
                         @else
                             <img src="{{ asset('storage/' . $gambar->url) }}" alt="Post image"
-                                class="w-full {{ $post->gambarPost->count() === 3 && $index > 0 ? 'h-24' : 'h-32' }} object-cover">
+                                class="w-full {{ $post->gambarPost->count() === 3 && $index > 0 ? 'h-24' : 'h-32' }} object-cover" onclick="openImageModal(this.src)">
                         @endif
                     @endforeach
                 </div>
@@ -99,9 +100,9 @@
     <!-- Engagement Summary -->
     <div class="my-6 mx-4 pt-4 border-t flex gap-4 border-gray-100">
         <div class="flex items-center space-x-2">
-            <div class="flex items-center text-red-500">
+            <div class="flex items-center {{ $post->like->where('user_id', Auth::id())->count() ? 'text-red-500' : 'text-gray-400' }}">
                 <button wire:click="toggleLike">
-                    <svg class="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                    <svg class="w-5 h-5 mr-1 {{ $post->like->where('user_id', Auth::id())->count() ? 'text-red-500' : 'text-gray-400' }}" fill="currentColor" viewBox="0 0 20 20">
                         <path
                             d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z">
                         </path>
@@ -191,4 +192,20 @@
             @endforeach
         </div>
     @endif
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center hidden z-50">
+        <span class="absolute top-4 right-6 text-white text-3xl cursor-pointer" onclick="closeImageModal()">&times;</span>
+        <img id="modalImage" class="max-w-3xl max-h-[90vh] rounded-lg shadow-lg" src="">
+    </div>
+    
+    <script>
+        function openImageModal(src) {
+            document.getElementById("modalImage").src = src;
+            document.getElementById("imageModal").classList.remove("hidden");
+        }
+        function closeImageModal() {
+            document.getElementById("imageModal").classList.add("hidden");
+        }
+    </script>
 </div>
