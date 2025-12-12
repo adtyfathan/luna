@@ -1,5 +1,6 @@
 import http from "k6/http";
 import { check, sleep } from "k6";
+import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 
 export let options = {
     stages: [
@@ -19,6 +20,12 @@ const PUBLIC_ROUTES = [
     "/edukasi/1",
 ];
 
+export function handleSummary(data) {
+    return {
+        "spike-test.html": htmlReport(data),
+    };
+}
+
 // TEST FLOW
 export default function () {
 
@@ -31,3 +38,5 @@ export default function () {
 
     sleep(0.2);
 }
+
+
